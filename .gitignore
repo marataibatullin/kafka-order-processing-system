@@ -8,3 +8,14 @@ wheels/
 
 # Virtual environments
 .venv
+
+# IDE
+.idea/
+.vscode/
+
+# Environment
+.env
+.env-docker
+
+# Docker
+docker/
