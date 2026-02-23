@@ -4,4 +4,64 @@ version = "0.1.0"
 description = "Order microservice"
 readme = "README.md"
 requires-python = ">=3.14.2"
-dependencies = []
+dependencies = [
+    "confluent-kafka>=2.13.0",
+    "fastapi[all]>=0.128.0",
+]
+
+
+[tool.ruff]
+# Общие настройки
+line-length = 120
+src = ["src", "tests"]
+exclude = [
+    ".venv",
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    "venv",
+]
+
+[tool.ruff.format]
+# Настройки форматтера
+quote-style = "double"
+line-ending = "auto"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint]
+# Настройки линтера
+select = [
+    "E", "W",  # pycodestyle
+    "F",       # pyflakes
+    "I",       # isort
+    "C",       # comprehensions
+    "B",       # bugbear
+    "Q",       # quotes
+    "ERA",     # eradicate 
+    "FAST",    # fastapi
+    "INP",     # flake8-no-pep420
+]
+ignore = [
+    "E501",    # line too long (форматтер сам исправит)
+    "C901",    # too complex
+    "B904",    # raise without from
+]
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "double"
+multiline-quotes = "double"
+docstring-quotes = "double"
+
+[tool.ruff.lint.isort]
+order-by-type = true
+relative-imports-order = "closest-to-furthest"
+extra-standard-library = ["typing"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+known-first-party = []
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.2",
+]
