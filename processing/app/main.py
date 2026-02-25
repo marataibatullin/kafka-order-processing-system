@@ -1,7 +1,15 @@
-from fastapi import FastAPI
+from consumer import consume_orders
+from producer import publish_event
 
-app = FastAPI()
 
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy", "service": "processing-service"}
+def process():
+    for order in consume_orders():
+        status = "confirmed" if order["quantity"] > 0 else "rejected"
+
+        publish_event("notifications", {
+            "order_id": order["order_id"],
+            "status": status
+        })
+
+if __name__ == "__main__":
+    process()
