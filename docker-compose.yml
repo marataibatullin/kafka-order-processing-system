@@ -133,3 +133,20 @@
         - ./processing/logs:/app/logs
       command: >
         sh -c "cd /app/app && python main.py"  
+
+    notification-service:
+      container_name: notification-service
+      build:
+        context: ./notification
+        dockerfile: Dockerfile
+      env_file:
+        - ./notification/.env
+      depends_on:
+        kafka:
+          condition: service_healthy
+      restart: unless-stopped
+      volumes:
+        - ./notification:/app
+        - ./notification/logs:/app/logs
+      command: >
+        sh -c "cd /app/app && python main.py"  
